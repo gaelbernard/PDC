@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ptml>
+<processTree id="9684229e-68e6-4b77-965e-c6f20ed44eab" name="9684229e-68e6-4b77-965e-c6f20ed44eab" root="c058d66b-bc22-408a-a2b3-6ba845bce9c0">
+<manualTask id="4e979770-3993-43d2-a16d-14c6dba661c9" name="m"/>
+<manualTask id="eb5e268d-ff63-4f5d-875c-e86c7ee7a8d5" name="b"/>
+<xor id="c058d66b-bc22-408a-a2b3-6ba845bce9c0" name=""/>
+<parentsNode id="61a7de29-53fe-4b0b-bf04-008be8b65fe4" sourceId="c058d66b-bc22-408a-a2b3-6ba845bce9c0" targetId="eb5e268d-ff63-4f5d-875c-e86c7ee7a8d5"/>
+<parentsNode id="47b10a52-fde9-4d0b-95b3-9d646926ec74" sourceId="c058d66b-bc22-408a-a2b3-6ba845bce9c0" targetId="4e979770-3993-43d2-a16d-14c6dba661c9"/>
+</processTree>
+</ptml>
