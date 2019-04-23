@@ -6,6 +6,7 @@ import re
 def get_by_name(xml, name):
     results = [e for e in xml.iter('manualTask') if e.attrib['name'] == name]
     if len(results)!=1:
+        print (name)
         raise ValueError('Name does not exist exactly once!')
     return results[0]
 

@@ -108,8 +108,7 @@ class Feature:
             dists_count_before = dists_count_before/dists_count_before.max().max()
 
         dists_b_a = pairwise_distances(self.feature['distance_in_activity_seen_before'], metric='hamming')
-        dists = pd.DataFrame((dists_b_a+dists_count_before*0.1+dists_position+dists_neigh)/3.1)
-        #dists = pd.DataFrame(dists_count_before)
+        dists = pd.DataFrame((dists_b_a*0.5+dists_count_before*0.5+dists_position+dists_neigh)/3)
 
         self.distanceMatrix = dists
 

@@ -7,20 +7,29 @@ import pandas as pd
 from anytree.exporter import JsonExporter
 from Object.Feature import Feature
 from anytree import LevelOrderIter, Node, RenderTree
+import matplotlib.pyplot as plt
 
 def get_cluster(feature, k):
     label = AgglomerativeClustering(n_clusters=k).fit_predict(feature)
     return {id:feature.iloc[np.where(label==id)[0],:].index.values.tolist() for id in np.unique(label)}
 
 def show_silhouette(feature):
+    test_range = range(2,25)
     print ('####:')
     print ('silhouette:')
     o = {}
-    for k in range(2,26):
+    for k in test_range:
         label = AgglomerativeClustering(n_clusters=k).fit_predict(feature)
         o[k] = silhouette_score(feature, label)
         print (k, o[k])
-    pd.Series(o).to_csv('1_split/silhouette_score.csv', header=True)
+    o = pd.Series(o)
+    o.to_csv('1_split/silhouette_score.csv', header=True)
+    o.plot.line()
+    plt.xticks(test_range)
+    plt.grid()
+    plt.savefig('silhouette_score.png')
+    plt.close()
+
 
 def filter_seq(seq, to_keep):
     s_n = []
@@ -46,7 +55,7 @@ def get_abstract_log(seq, cluster):
 
 # Load logs
 log = Log()
-log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/results/log4/2_disambiguate_activities/output/dataset.csv')
+log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/2_disambiguate_activities/output/dataset.csv')
 
 c = {}
 for e in log.alphabet:
@@ -64,7 +73,7 @@ show_silhouette(feature)
 
 # Build the tree
 root = Node('root', discoveryAlgorithm="", nonReplayable="", log=log.seq)
-cluster = get_cluster(feature, 11)
+cluster = get_cluster(feature, 6) #5
 l = get_abstract_log(root.log, cluster)
 for i, c in cluster.items():
     Node(str(i), discoveryAlgorithm="", nonReplayable="", log=filter_seq(root.log, c), parent=root)

@@ -1,10 +1,12 @@
 from anytree.importer import JsonImporter
 from anytree import RenderTree
 import xml.etree.ElementTree as ET
+import re
 
 def get_by_name(xml, name):
     results = [e for e in xml.iter('manualTask') if e.attrib['name'] == name]
     if len(results)!=1:
+        print (name)
         raise ValueError('Name does not exist exactly once!')
     return results[0]
 
@@ -52,5 +54,14 @@ for c in root.children:
     add_content(main, sub)
 
 main.write('2_gather/pt.ptml')
+
+# Rename petri net
+input_file = '/Users/gbernar1/Desktop/pdc_3/PDC_repo/3_cIM/2_gather/pt.ptml'
+output_file = '/Users/gbernar1/Desktop/pdc_3/PDC_repo/3_cIM/2_gather/pt_renamed.ptml'
+with open(input_file, 'r') as r:
+    content = r.read()
+content = re.sub('(\$[0-9]{1,2})+', '', content)
+with open(output_file, 'w') as r:
+    r.write(content)
 
 

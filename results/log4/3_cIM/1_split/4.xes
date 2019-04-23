@@ -5,7 +5,7 @@
 	<trace>
       <string key="concept:name" value="0"/>
       <event><string key="concept:name" value="ab"/></event>
-      <event><string key="concept:name" value="as$1"/></event>
+      <event><string key="concept:name" value="as$0"/></event>
 	</trace>
 	<trace>
       <string key="concept:name" value="1"/>
@@ -29,7 +29,7 @@
 	<trace>
       <string key="concept:name" value="5"/>
       <event><string key="concept:name" value="ab"/></event>
-      <event><string key="concept:name" value="as$1"/></event>
+      <event><string key="concept:name" value="as$0"/></event>
 	</trace>
 	<trace>
       <string key="concept:name" value="6"/>
@@ -44,7 +44,7 @@
 	<trace>
       <string key="concept:name" value="8"/>
       <event><string key="concept:name" value="ab"/></event>
-      <event><string key="concept:name" value="as$1"/></event>
+      <event><string key="concept:name" value="as$0"/></event>
 	</trace>
 	<trace>
       <string key="concept:name" value="9"/>
