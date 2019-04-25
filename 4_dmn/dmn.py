@@ -1,12 +1,9 @@
-# Load logs
 from Object.Log import Log
 import pandas as pd
-from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score, accuracy_score, adjusted_mutual_info_score
 from sklearn.tree import export_graphviz
-from sklearn.feature_selection import SelectFromModel
 log = Log()
 log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/results/log5/1_remove_uncomplete_trace_gael/output/dataset/dataset.csv')
 

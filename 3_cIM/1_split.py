@@ -1,75 +1,13 @@
 from Object.Log import Log
-from constant import *
 import numpy as np
-from sklearn.metrics import silhouette_score
 from sklearn.cluster import AgglomerativeClustering, DBSCAN, AffinityPropagation, MeanShift
-import pandas as pd
 from anytree.exporter import JsonExporter
 from Object.Feature import Feature
 from anytree import LevelOrderIter, Node, RenderTree
-import matplotlib.pyplot as plt
-from sklearn.tree import ExtraTreeClassifier
 
 def get_cluster(feature, k):
-    #label = DBSCAN(min_samples=2).fit_predict(feature)
     label = AgglomerativeClustering(n_clusters=k, affinity="euclidean", linkage="average").fit_predict(feature)
-
-    #label = AffinityPropagation(affinity="precomputed").fit_predict(feature)
     return {id:feature.iloc[np.where(label==id)[0],:].index.values.tolist() for id in np.unique(label)}
-
-def get_similarity_matrix():
-    case = log.vector_traces.unique().tolist()
-    c = {}
-    for e in log.alphabet:
-        if e in ['LEFT_padding', 'RIGHT_padding']:
-            continue
-        c[e] = {}
-        for i, s in enumerate(log.seq):
-            c[e][case[i]] = s.count(e)
-    c = pd.DataFrame(c)
-
-
-    def make_symmetric(dm):
-        print (dm)
-        exit()
-        import itertools
-        for i0, i1 in itertools.permutations(dm.columns, 2):
-            m = (dm.loc[i0, i1]+dm.loc[i1, i0])/2
-            dm.loc[i0, i1] = m
-            dm.loc[i1, i0] = m
-        return dm
-
-    f_importance = {}
-    for e in log.alphabet:
-        if e in ['LEFT_padding', 'RIGHT_padding']:
-            continue
-        f = c.copy()
-        y = f[e]
-        f.drop([e], axis=1, inplace=True)
-        d = ExtraTreeClassifier(max_depth=3).fit(f, y)
-        f_importance[e] = pd.Series(d.feature_importances_, index=f.columns)
-
-    dm = pd.DataFrame(f_importance).fillna(1)
-    return dm
-
-
-def show_silhouette(feature):
-    test_range = range(2,25)
-    print ('####:')
-    print ('silhouette:')
-    o = {}
-    for k in test_range:
-        label = AgglomerativeClustering(affinity="cosine", linkage="complete", n_clusters=k).fit_predict(feature)
-        o[k] = silhouette_score(feature, label, metric='cosine')
-        print (k, o[k])
-    o = pd.Series(o)
-    o.to_csv('1_split/silhouette_score.csv', header=True)
-    o.plot.line()
-    plt.xticks(test_range)
-    plt.grid()
-    plt.savefig('silhouette_score.png')
-    plt.close()
-
 
 def filter_seq(seq, to_keep):
     s_n = []
@@ -97,17 +35,10 @@ def get_abstract_log(seq, cluster):
 log = Log()
 log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/1_remove_uncomplete_trace_gael/output/dataset/dataset.csv')
 
-for s in log.seq:
-    print (s)
-
 # Load feature
 f = Feature()
 f.build_distanceMatrix(log)
 feature = f.dm_aggregated(log.vector_activities, n_components=100)
-#feature = get_similarity_matrix()
-
-print (feature)
-#show_silhouette(feature)
 
 # Build the tree
 root = Node('root', discoveryAlgorithm="", nonReplayable="", log=log.seq)

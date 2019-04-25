@@ -5,7 +5,7 @@ from Object.Feature import Feature
 import matplotlib.pyplot as plt
 import constant
 
-dataset_id = 3
+dataset_id = 9
 
 # We also leverage the training data to get more samples
 files = {
@@ -52,7 +52,6 @@ for type in files.keys():
     plt.xlabel('Number of activities to cut')
     if type == 'overall':
         plt.vlines(140,0,1, linestyles='dashed')
-    plt.title('Probabilities to be incomplete: ')
     plt.savefig('output/plt/{}.png'.format(type))
     plt.close()
 

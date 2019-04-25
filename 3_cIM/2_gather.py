@@ -39,8 +39,6 @@ importer = JsonImporter()
 with open('1_split/rendertree.json', 'r') as f:
     root = importer.read(f)
 
-
-
 main = ET.parse('2_gather/{}.ptml'.format(root.name))
 
 print (RenderTree(root))

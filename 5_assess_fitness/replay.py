@@ -159,14 +159,14 @@ replay_settings = {
     'feb-log6-training': {
         'path_log': '{}/data/csv/tests/feb-log6-training.csv'.format(root),
         'tests': {
-            'conformance_imperative': '{}/results/log6/replay/feb.csv'.format(root),
+            'conformance_imperative': '{}/results/log6/5_replay/feb.csv'.format(root),
         },
         'comments': 'Perfect. Approx 38/40'
     },
     'mar-log6-training': {
         'path_log': '{}/data/csv/tests/mar-log6-training.csv'.format(root),
         'tests': {
-            'conformance_imperative': '{}/results/log6/replay/mar.csv'.format(root),
+            'conformance_imperative': '{}/results/log6/5_replay/mar.csv'.format(root),
         },
         'comments': 'Perfect. Approx 38/40'
     },
@@ -231,8 +231,7 @@ replay_settings = {
         'comments': ''
     },
 }
-n = 'mar-log1-training'
-output = pd.DataFrame({x:replay(replay_settings[x]) for x in replay_settings.keys() if 'feb' in x})
+output = pd.DataFrame({x:replay(replay_settings[x]) for x in replay_settings.keys() if 'mar' in x})
 
 print (output.apply(lambda x: x.astype(int).sum()))
 print (output.apply(lambda x: x.astype(str).str.upper()))
