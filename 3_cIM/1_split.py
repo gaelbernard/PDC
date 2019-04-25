@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from sklearn.tree import ExtraTreeClassifier
 
 def get_cluster(feature, k):
-    #label = DBSCAN(etpsmin_samples=2).fit_predict(feature)
+    #label = DBSCAN(min_samples=2).fit_predict(feature)
     label = AgglomerativeClustering(n_clusters=k, affinity="euclidean", linkage="average").fit_predict(feature)
 
     #label = AffinityPropagation(affinity="precomputed").fit_predict(feature)
@@ -95,7 +95,7 @@ def get_abstract_log(seq, cluster):
 
 # Load logs
 log = Log()
-log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/results_first_attempt/log8/1_remove_uncomplete_trace_gael/output/dataset/dataset.csv')
+log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/1_remove_uncomplete_trace_gael/output/dataset/dataset.csv')
 
 for s in log.seq:
     print (s)

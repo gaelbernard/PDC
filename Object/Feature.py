@@ -49,7 +49,7 @@ class Feature:
     def distance_next_neigh(self, log, onlyLeft=False):
         data = defaultdict(list)
         for i in log.vector_activities.index:
-            for win in [1,6]:
+            for win in [1,8]:
                 data['left_{}'.format(win)].append('$'.join(log.lefts[i][-win:]))
                 if not onlyLeft:
                     data['right_{}'.format(win)].append('$'.join(log.rights[i][:win]))
@@ -75,7 +75,7 @@ class Feature:
             for l in log.alphabet:
                 is_before = l in log.lefts[i]
                 is_after = l in log.lefts[i]
-                if is_after and is_after:
+                if is_after and is_before:
                     v = 3
                 elif is_after:
                     v = 2
@@ -98,23 +98,27 @@ class Feature:
         dists_position = pairwise_distances(self.feature['distance_position'], metric='manhattan')
         if dists_position.max().max()!=0:
             dists_position = dists_position/dists_position.max().max()
+        print (pd.DataFrame(dists_position).head())
 
         dists_neigh = pairwise_distances(self.feature['distance_next_neigh'], metric='cosine')
         if dists_neigh.max().max()!=0:
             dists_neigh = dists_neigh/dists_neigh.max().max()
+        print (pd.DataFrame(dists_neigh).head())
 
         dists_count_before = pairwise_distances(self.feature['distance_in_count_activity_before'], metric='manhattan')
         if dists_count_before.max().max()!=0:
             dists_count_before = dists_count_before/dists_count_before.max().max()
+        print (pd.DataFrame(dists_count_before).head())
 
         dists_b_a = pairwise_distances(self.feature['distance_in_activity_seen_before'], metric='hamming')
-        dists = pd.DataFrame((dists_b_a*0.5+dists_count_before*0.5+dists_position+dists_neigh)/3)
+        print (pd.DataFrame(dists_b_a).head())
+
+        dists = pd.DataFrame((dists_b_a+dists_count_before+dists_position+dists_neigh)/4)
 
         self.distanceMatrix = dists
 
     def dm_aggregated(self, vector_aggregation, n_components=None):
-        self.distanceMatrix['vector_aggregation'] = vector_aggregation
-        d = self.distanceMatrix.groupby('vector_aggregation').mean()
+        d = self.distanceMatrix.groupby(vector_aggregation).mean()
         if n_components:
             d = pd.DataFrame(TruncatedSVD(n_components=n_components).fit_transform(d), index=d.index)
         return d

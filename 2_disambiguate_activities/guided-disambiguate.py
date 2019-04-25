@@ -64,7 +64,7 @@ def goToNext():
 
 # Load Logs
 log = Log()
-log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/data/csv/log9-training.csv')
+log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/1_remove_uncomplete_trace_gael/output/dataset/dataset.csv')
 
 # Load
 f = Feature()

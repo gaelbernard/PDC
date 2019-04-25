@@ -11,8 +11,10 @@ import matplotlib.pyplot as plt
 from sklearn.tree import ExtraTreeClassifier
 
 def get_cluster(feature, k):
-    #label = AgglomerativeClustering(n_clusters=k, affinity="cosine", linkage="complete").fit_predict(feature)
-    label = AffinityPropagation(affinity="precomputed").fit_predict(feature)
+    #label = DBSCAN(etpsmin_samples=2).fit_predict(feature)
+    label = AgglomerativeClustering(n_clusters=k, affinity="cosine", linkage="average").fit_predict(feature)
+
+    #label = AffinityPropagation(affinity="precomputed").fit_predict(feature)
     return {id:feature.iloc[np.where(label==id)[0],:].index.values.tolist() for id in np.unique(label)}
 
 def get_similarity_matrix():
@@ -26,10 +28,13 @@ def get_similarity_matrix():
             c[e][case[i]] = s.count(e)
     c = pd.DataFrame(c)
 
+
     def make_symmetric(dm):
+        print (dm)
+        exit()
         import itertools
         for i0, i1 in itertools.permutations(dm.columns, 2):
-            m = max(dm.loc[i0, i1],dm.loc[i1, i0])
+            m = (dm.loc[i0, i1]+dm.loc[i1, i0])/2
             dm.loc[i0, i1] = m
             dm.loc[i1, i0] = m
         return dm
@@ -41,12 +46,11 @@ def get_similarity_matrix():
         f = c.copy()
         y = f[e]
         f.drop([e], axis=1, inplace=True)
-        d = ExtraTreeClassifier(max_depth=10).fit(f, y)
+        d = ExtraTreeClassifier(max_depth=3).fit(f, y)
         f_importance[e] = pd.Series(d.feature_importances_, index=f.columns)
 
-    dm = 1-pd.DataFrame(f_importance)
-    dm.fillna(0, inplace=True)
-    return make_symmetric(dm)
+    dm = pd.DataFrame(f_importance).fillna(1)
+    return dm
 
 
 def show_silhouette(feature):
@@ -91,19 +95,23 @@ def get_abstract_log(seq, cluster):
 
 # Load logs
 log = Log()
-log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/results/log7/2_disambiguate_activities/output/dataset.csv')
+log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/2_disambiguate_activities/output/dataset.csv')
+
+for s in log.seq:
+    print (s)
 
 # Load feature
-#f = Feature()
-#f.build_distanceMatrix(log)
-#feature = f.dm_aggregated(log.vector_activities, n_components=100)
-feature = get_similarity_matrix()
+f = Feature()
+f.build_distanceMatrix(log)
+feature = f.dm_aggregated(log.vector_activities, n_components=100)
+#feature = get_similarity_matrix()
 
+print (feature)
 #show_silhouette(feature)
 
 # Build the tree
 root = Node('root', discoveryAlgorithm="", nonReplayable="", log=log.seq)
-cluster = get_cluster(feature, 4) #8 possible, 10 pas possible, 12 pas possible
+cluster = get_cluster(feature, 3)
 l = get_abstract_log(root.log, cluster)
 for i, c in cluster.items():
     Node(str(i), discoveryAlgorithm="", nonReplayable="", log=filter_seq(root.log, c), parent=root)

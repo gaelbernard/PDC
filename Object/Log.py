@@ -105,15 +105,15 @@ class Log:
         pd.DataFrame(o).to_csv(path, index=False)
 
     def to_xes(self, path):
-
+        traces_ids = self.df[self.trace_col].unique().tolist()
         xes = '''<?xml version="1.0" encoding="UTF-8"?>
 <log>
     <extension name="Concept" prefix="concept" uri="http://www.xes-standard.org/concept.xesext"/>
     <extension name="Lifecycle" prefix="lifecycle" uri="http://www.xes-standard.org/lifecycle.xesext"/>
 '''
-        for trace_id, trace in enumerate(self.seq):
+        for index, trace in enumerate(self.seq):
             xes+='	<trace>\n'
-            xes+='      <string key="concept:name" value="{0}"/>\n'.format(trace_id)
+            xes+='      <string key="concept:name" value="{0}"/>\n'.format(traces_ids[index])
             for event in trace:
                 xes+='      <event><string key="concept:name" value="{0}"/></event>\n'.format(event)
             xes+='	</trace>\n'

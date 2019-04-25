@@ -5,7 +5,7 @@ from Object.Feature import Feature
 import matplotlib.pyplot as plt
 import constant
 
-dataset_id = 8
+dataset_id = 2
 
 # For the training, we take the data from the training log + tests from March and February
 files = {

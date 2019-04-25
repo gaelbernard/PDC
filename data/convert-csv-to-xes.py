@@ -2,7 +2,7 @@ import pandas as pd
 from Object.Log import Log
 
 for dataset_id in range(1,11):
-    name = "mar-log{}-training".format(dataset_id)
+    name = "feb-log{}-training".format(dataset_id)
 
     # Loading Logs
     log = Log()
