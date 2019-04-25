@@ -1,0 +1,9 @@
+(dmn['z_1'] <= 0.448) | (dmn['z_1'] > 0.621) == happens['ad']
+(dmn['z_1'] <= 0.448) | (dmn['z_1'] > 0.824) != happens['ah']
+(dmn['z_1'] <= 0.824) == happens['aj']
+(dmn['z_1'] <= 0.448) != happens['ak']
+(dmn['z_1'] <= 0.447) | (dmn['z_1'] > 0.621) == happens['al']
+(dmn['z_1'] <= 0.448) == happens['f']
+(dmn['z_1'] <= 0.448) | (dmn['z_1'] > 0.62) == happens['o']
+(dmn['z_1'] <= 0.448) | (dmn['z_1'] > 0.621) == happens['p']
+

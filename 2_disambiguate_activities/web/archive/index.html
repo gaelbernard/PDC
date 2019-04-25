@@ -1,0 +1,320 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <style>
+        body {
+            font-family: Helvetica;
+        }
+        .activity.inactive {
+            color:#fff;
+            text-align:center !important;
+        }
+        .activity.inactive .label{
+
+            font-weight:normal;
+        }
+        .activity.active, .empty{
+            color:#000;
+            background-color:#fff;
+            border: 2px solid #f00 !important;
+        }
+        .activity.active input {
+            background-color: rgba(255, 255, 255, 0.5);
+            font-weight:bold;
+        }
+        .activity.empty input {
+            background-color: rgba(200, 200, 200, 0.5);
+            font-weight:bold;
+        }
+        .activity.active .label, .empty .label{
+            display:show;
+        }
+        .activity {
+            float: left;
+            font-size: 16px;
+            line-height:.9;
+            width:50px;
+
+            padding: 0;
+            margin: 0;
+            border: 0;
+            text-align:left;
+            height:16px;
+            overflow:hidden;
+        }
+        .label {
+            width: 15px;
+            background: transparent;
+            border: none;
+            height:16px;
+            font-size:12px;
+        }
+        .trace {
+            clear: both;
+            padding: 4px 0;
+        }
+        .action-panel {
+            clear: both;
+            margin:20px;
+        }
+        #processtree {
+            width:100px;
+            border:1px #000 solid;
+            display:none;
+        }
+        #stats {
+            display:none
+        }
+        #processtree img {
+            width:100%;
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <script>
+    var index_current_letter = 0;
+    var alphabet = [];
+    var trace = [];
+    var unique_labels = new Set(); // List all the unique label used
+    var colors_dark;
+    var colors_pastel =  ["#e0a944", "#e480e9", "#7cdb4a", "#ada2ec", "#cfd73f", "#64b0eb", "#68d97c", "#ea90bb", "#70e9b3", "#ed946e", "#55ede0", "#c2d07b", "#43c7e4", "#73c08a", "#4fc6bf"];
+
+	$(function() {
+        load_data();
+    });
+    function load_data() {
+        $.getJSON("http://0.0.0.0:81/getAlphabet", function( data ) {
+            alphabet = data;
+            colors_dark = chroma.scale(['#eee','black']).mode('lch').colors(alphabet.length);
+            generate_alphabet_menu();
+            $.getJSON("http://0.0.0.0:81/getLog", function( data ) {
+                trace = data;
+                load_trace();
+                update();
+            });
+        });
+
+    }
+    function generate_alphabet_menu() {
+        $.getJSON("http://0.0.0.0:81/getAlphabet", function( data ) {
+
+            $("#alphabet-menu").html("");
+            $.each( alphabet, function( index, value ){
+                $("#alphabet-menu").append('<button type="button" class="btn btn-secondary alpha-'+index+'" onClick="goTo('+index+')">'+value+'</button>');
+            });
+        });
+    }
+    function update_menu(letter) {
+        $("#alphabet-menu .btn").removeClass('btn-primary').addClass('btn-secondary');
+        $("#alphabet-menu .alpha-"+index_current_letter).addClass('btn-primary').removeClass('btn-secondary');
+    }
+    function update() {
+        update_class();
+        update_menu();
+        color_activities();
+    }
+    function goTo(index) {
+        index_current_letter = index;
+        update();
+    }
+    function goToNext() {
+        goTo(index_current_letter+1)
+    }
+    function load_trace() {
+        html = "";
+        $.each(trace, function( trace_index, seq ){
+            html = html+'<div class="trace" id="trace-index-'+trace_index+'">'+trace_index;
+            $.each(seq, function( _, e ){
+                html = html+' <div class="activity letter-'+alphabet.indexOf(e)+' inactive">'+e+'<input onchange="update()" id="index-'+alphabet.indexOf(e)+'" type="text" class="label" value=""/></div>'
+            });
+            html = html+'</div>';
+        });
+        $("#trace-container").html(html);
+    }
+
+    function color_activities() {
+        $(".activity").css({ 'background-color' : ''});
+        colors_dark = chroma.scale(['#ccc','black']).mode('lch').colors(alphabet.length);
+
+        $.each( alphabet, function( index, value ){
+            //Inactive
+            if (value != alphabet[index_current_letter]) {
+                $(".inactive.letter-"+index).css("background-color", colors_dark[index]);
+            }
+            //Active
+            else {
+                unique_labels_list = Array.from(unique_labels);
+                $(".active").each(function( index, value ){
+                    $(value).css('background-color', colors_pastel[unique_labels_list.indexOf($(value).children('input').val())]);
+                });
+            }
+        });
+    }
+    function propagate() {
+        activity = alphabet[index_current_letter];
+        labels = [];
+        $(".trace .letter-"+index_current_letter+" input").each(function( index, value ){
+            labels.push($(value).val());
+        });
+        $.getJSON("http://0.0.0.0:81/propagate/"+activity+"/"+JSON.stringify(labels), function( data ) {
+            $(".trace .letter-"+index_current_letter+" input").each(function( index, value ){
+                $(value).val(data[index]);
+            });
+            update();
+        });
+    }
+    function cluster() {
+        activity = alphabet[index_current_letter];
+        $.getJSON("http://0.0.0.0:81/cluster/"+activity+"/"+$("#n-cluster").val(), function( data ) {
+            $(".trace .letter-"+index_current_letter+" input").each(function( index, value ){
+                $(value).val(data[index]);
+            });
+            update();
+        });
+    }
+    function bestk() {
+        activity = alphabet[index_current_letter];
+        $.getJSON("http://0.0.0.0:81/bestk/"+activity, function( data ) {
+            alert('best k seems to be: '+ data);
+        });
+    }
+
+    function reset() {
+        labels = [];
+        $(".trace .letter-"+index_current_letter+" input").val("");
+        update();
+    }
+
+    function finish() {
+        name = prompt("name_of_csv?");
+        labels = [];
+        $(".trace input").each(function( index, value ){
+            labels.push($(value).val());
+        });
+        $.getJSON("http://0.0.0.0:81/save/"+name+"/"+JSON.stringify(labels), function( data ) {
+            console.log('saved!')
+        });
+    }
+
+    function getPetri(replay) {
+        $("#processtree").hide();
+        $("#stats").hide();
+
+        labels = [];
+        $(".trace input").each(function( index, value ){
+            labels.push($(value).val());
+        });
+        $.getJSON("http://0.0.0.0:81/getPetri/"+replay+"/"+JSON.stringify(labels), function( data ) {
+            d = new Date();
+            console.log(data)
+            $("#stats").html(JSON.stringify(data));
+            $("#processtree").html('<img src="petri.png" />');
+            $("#processtree").attr("src", "petri.png?"+d.getTime());
+            $("#processtree").show();
+            $("#stats").show();
+        });
+    }
+
+	function update_class() {
+        update_set_unique_labels();
+        // First consider them all inactive
+        $(".activity").removeClass('inactive').removeClass('active').removeClass('empty').addClass('inactive');
+        // Then consider all about the letter as empty
+        $(".letter-"+index_current_letter).closest('.activity').removeClass('inactive').addClass('empty');
+        // Loop the empty and make them active if they contain a val
+        $(".empty").closest('.activity').each(function( index, value ){
+            if ($(value).children('input').val() != "") {
+                $(value).removeClass('inactive').addClass('active')
+            }
+        });
+    }
+    // Parse all the unique values assigned to labels
+    function update_set_unique_labels() {
+        unique_labels = new Set();
+        $(".letter-"+index_current_letter+" .label").each(function() {
+            if ($(this).val() != '') {
+                unique_labels.add($(this).val());
+            }
+        });
+    }
+
+
+    function showTab(name) {
+        $(".tab").hide();
+        $(".menu-tab a").removeClass('active');
+        $("#"+name).show();
+        $("#menu-"+name+" a").addClass('active');
+
+    }
+
+	//console.log();
+</script>
+</head>
+<body>
+<h1>Activity Disambiguation:</h1>
+<ul class="nav nav-tabs">
+    <li class="nav-item menu-tab" id="menu-log">
+        <a class="nav-link active" href="#" onclick="showTab('log')">Log</a>
+    </li>
+    <li class="nav-item menu-tab" id="menu-petrinet">
+        <a class="nav-link" href="#" onclick="showTab('petrinet')">Petri Net</a>
+    </li>
+</ul>
+<div id="log" class="tab">
+    <div class="row mt-5 container">
+        <div class="float-left mr-5 ml-5">
+            <div class="btn-group" role="group" >
+                <button class="btn btn-link" type="button" onClick="bestk()">bestK?</button>
+                <input type="text" class="form-control" placeholder="k" id="n-cluster" size="3">
+                <button class="btn btn-secondary" type="button" onClick="cluster()">AgglomerativeClustering</button>
+            </div>
+        </div>
+        <div class="float-left mr-5">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-secondary" onClick="propagate()">Label Propagation</button>
+            </div>
+        </div>
+        <div class="float-left mr-5">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-warning" onClick="reset()">Reset</button>
+                <button type="button" class="btn btn-secondary" onClick="finish()">Export CSV</button>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 container">
+        <b>Alphabet:</b>
+        <div class="btn-group btn-group-sm" role="group" aria-label="Small button group" id="alphabet-menu"></div>
+    </div>
+    <div id="trace-container" class="container-fluid">
+
+    </div>
+</div>
+<div id="petrinet" class="tab">
+    <div class="action-panel">
+        <button type="button" class="btn btn-secondary" onClick="getPetri('False')">Run Inductive Miner</button>
+        <button type="button" class="btn btn-secondary" onClick="getPetri('True')">Run Inductive Miner (with replay)</button>
+    </div>
+    <div class="float-left mr-5">
+        <h5>Petri Net</h5>
+        <div id="processtree">
+
+        </div>
+    </div>
+    <div class="float-left mr-5">
+        <h5>Stats</h5>
+        <pre id="stats">
+            dsasa
+            dds
+        </pre>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.0.3/chroma.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</body>
+</html>

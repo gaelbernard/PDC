@@ -11,7 +11,9 @@ import urllib.parse
 import json
 
 def get_worst(feature, vector, rejected):
-
+    '''
+    The worst activity is the one having the biggest distance
+    '''
     min_score = {}
     for l in np.unique(vector):
         if l in rejected:
@@ -30,6 +32,9 @@ def get_worst(feature, vector, rejected):
     return worst
 
 def disambiguate(l, feature, vector):
+    '''
+    We disambiguate by clustering the activities using an agglomerative clustering
+    '''
     index_activity = vector[vector == l].index.values
     subset = feature.iloc[index_activity,index_activity]
     for k in range(2, 3):
@@ -41,6 +46,9 @@ def disambiguate(l, feature, vector):
     return v
 
 def show_seq(vector):
+    '''
+    Transform a sequence of activities in a list of activities
+    '''
     new_seq = []
     i=0
     for s in log.seq:
@@ -52,8 +60,9 @@ def show_seq(vector):
     return new_seq
 
 def goToNext():
-    print ()
-    print ('#######')
+    '''
+    Get the next letter, will until we reach the last "worst" activities (the one having the smallest distance)
+    '''
     worst_letter = get_worst(feature, new_vector, rejected)
     potential_new_vector = disambiguate(worst_letter, feature, new_vector)
     v = potential_new_vector[new_vector==worst_letter]
@@ -61,22 +70,21 @@ def goToNext():
     data = {'activity':worst_letter, 'index':g, 'seq':show_seq(potential_new_vector), 'alphabet':list(set(potential_new_vector.values)), 'activity_u':list(set(v.values))}
     return worst_letter, potential_new_vector, data
 
-
 # Load Logs
 log = Log()
-log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/1_remove_uncomplete_trace_gael/output/dataset/dataset.csv')
+log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/results/log4/1_remove_uncomplete_trace_gael/output/dataset/dataset.csv')
 
-# Load
+# Load features
 f = Feature()
 f.build_distanceMatrix(log)
 feature = f.distanceMatrix
-print (feature.head())
 
-
+# Start the process
 new_vector = log.vector_activities
 rejected = []
 worst_letter, potential_new_vector, data = goToNext()
 
+# Prepare API
 CORS(app)
 @app.route('/getCurrent')
 def getCurrent():
@@ -104,7 +112,6 @@ def save():
     d = log.df.loc[:,['case','event']]
     d.to_csv('output/dataset.csv', index=False)
     return json.dumps("1")
-
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=81)

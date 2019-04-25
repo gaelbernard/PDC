@@ -5,9 +5,9 @@ from Object.Feature import Feature
 import matplotlib.pyplot as plt
 import constant
 
-dataset_id = 2
+dataset_id = 3
 
-# For the training, we take the data from the training log + tests from March and February
+# We also leverage the training data to get more samples
 files = {
     'feb': 'tests/feb-log{}-training.csv'.format(dataset_id),
     'mar': 'tests/mar-log{}-training.csv'.format(dataset_id),
@@ -52,7 +52,7 @@ for type in files.keys():
     plt.xlabel('Number of activities to cut')
     if type == 'overall':
         plt.vlines(140,0,1, linestyles='dashed')
-    plt.title('Probabilities to be uncomplete: ')
+    plt.title('Probabilities to be incomplete: ')
     plt.savefig('output/plt/{}.png'.format(type))
     plt.close()
 

@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <style>
+        body {
+            font-family: Helvetica;
+        }
+
+        .activity, .activity-trace-index {
+            display:inline-block;
+            font-size: 12px;
+            line-height:1.4;
+            width:50px;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            text-align:center;
+            height:16px;
+            overflow:hidden;
+            color:#fff;
+        }
+        .trace {
+            clear: both;
+            white-space:nowrap;
+        }
+        .trace-index {
+            color:#ccc;
+        }
+        #trace-container {
+            width:100%;
+            overflow: scroll;
+        }
+        #button-container {
+            margin-left:20px;
+            margin-bottom:20px;
+        }
+        #end-button-container {
+            margin-left:200px;
+            margin-bottom:20px;
+        }
+
+
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <script>
+    var colors_dark;
+    var colors_pastel =  ["#7cdb4a", "#64b0eb", "#ada2ec", "#68d97c", "#ea90bb","#e0a944", "#cfd73f", "#e480e9", "#70e9b3", "#ed946e", "#55ede0", "#c2d07b", "#43c7e4", "#73c08a", "#4fc6bf"];
+    var data_global;
+	$(function() {
+        load_data();
+    });
+    function load_data() {
+        $("#trace-container").html("");
+        $.getJSON("http://0.0.0.0:81/getCurrent", function( data ) {
+            data_global = data;
+            console.log(data_global)
+            load_trace();
+        });
+    }
+    function load_trace() {
+        html = "";
+        i=0;
+        $.each(data_global.seq, function( trace_index, trace){
+            html = html+'<div class="trace" id="trace-index-'+trace_index+'">';
+            $.each(trace, function( _, e ){
+                html = html+' <div class="activity letter-'+data_global.alphabet.indexOf(e)+'" id="unique-'+i+'" onClick="changeLabel('+i+')">'+e+'</div>'
+                i+=1
+            });
+            html = html+'<div class="activity-trace-index trace-index">'+trace_index+'</div>';
+            html = html+'</div>';
+
+        });
+        $("#trace-container").html(html);
+        color_activities();
+    }
+    function color_activities() {
+        $(".activity").css({ 'background-color' : ''});
+        colors_dark = chroma.scale(['#ccc','black']).mode('lch').colors(data_global.alphabet.length);
+
+        $.each(data_global.alphabet, function( index, value ){
+            $('.letter-'+index).css('background-color', colors_dark[index]);
+        });
+
+        $.each(data_global.index, function( i_color, i_indexes ){
+            $.each(i_indexes, function(_, i_index ){
+                value = $("#unique-"+i_index).html();
+                console.log(data_global.activity_u.indexOf(value), value)
+                $('#unique-'+i_index).css('background-color',  colors_pastel[data_global.activity_u.indexOf(value)]);
+            });
+        });
+    }
+    function end() {
+        $.getJSON("http://0.0.0.0:81/save", function( _ ) {
+            alert('csv exported!')
+        });
+    }
+    function reject() {
+        $.getJSON("http://0.0.0.0:81/reject", function( _ ) {
+            load_data();
+        });
+    }
+    function accept() {
+        labels = [];
+        $(".activity").each(function( index, value ){
+            labels.push($(value).html());
+        });
+        $.getJSON("http://0.0.0.0:81/accept/"+JSON.stringify(labels), function( _ ) {
+            load_data();
+        });
+    }
+    function changeLabel(i){
+        console.log(i)
+        // Make sure we clicked on an active activity
+        indexCurrentlyUnder = [].concat.apply([], data_global.index);
+        if (indexCurrentlyUnder.indexOf(i) >= 0) {
+
+            //Collect the position of current values
+            current_bucket = data_global.activity_u.indexOf($("#unique-"+i).html());
+
+            // Take the next element
+            next_bucket = current_bucket+1;
+
+            if (next_bucket>=data_global.activity_u.length) next_bucket = 0;
+            $("#unique-"+i).html(data_global.activity_u[next_bucket]);
+            color_activities()
+        }
+    }
+
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+<h1>Activity Disambiguation:</h1>
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+    <div id="button-container" class="btn-group" role="group" aria-label="First group">
+        <button type="button" class="btn btn-primary" onClick="reject()"><i class="fa fa-close"></i> Reject</button>
+        <button type="button" class="btn btn-primary" onClick="accept()"><i class="fa fa-check"></i> Accept</button>
+    </div>
+    <div id="end-button-container" class="btn-group" role="group" aria-label="Second group">
+        <button type="button" class="btn btn-primary" onClick="end()"><i class="fa fa-save"></i> End</button>
+    </div>
+</div>
+<div id="trace-container" class="container-fluid">
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.0.3/chroma.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</body>
+</html>
