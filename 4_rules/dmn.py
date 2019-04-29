@@ -6,7 +6,7 @@ from sklearn.metrics import f1_score, accuracy_score, adjusted_mutual_info_score
 from sklearn.tree import export_graphviz
 log = Log()
 log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/results/log10/1_incomplete/output/dataset/dataset.csv')
-
+max_leaf_nodes = 4
 '''
 The goal is discover the strong correlation between the execution of an activity AND a rule in the DMN table
 '''
@@ -50,7 +50,7 @@ for l in log.alphabet:
     # What we try to predict is the count of the activity l (i.e., target)
     y_train = c.loc[:,l]
 
-    tree = DecisionTreeClassifier(max_leaf_nodes=4)
+    tree = DecisionTreeClassifier(max_leaf_nodes=max_leaf_nodes)
     tree.fit(dmn, y_train)
     prediction = tree.predict(dmn)
 

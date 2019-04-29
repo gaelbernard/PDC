@@ -34,6 +34,7 @@ def get_abstract_log(seq, cluster):
 # Load logs
 log = Log()
 log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/results/log10/2_disambiguate_activities/output/dataset.csv')
+number_of_cluster = 5
 
 # Load feature
 f = Feature()
@@ -42,7 +43,7 @@ feature = f.dm_aggregated(log.vector_activities, n_components=100)
 
 # Build the tree
 root = Node('root', discoveryAlgorithm="", nonReplayable="", log=log.seq)
-cluster = get_cluster(feature, 5)
+cluster = get_cluster(feature, number_of_cluster)
 l = get_abstract_log(root.log, cluster)
 for i, c in cluster.items():
     Node(str(i), discoveryAlgorithm="", nonReplayable="", log=filter_seq(root.log, c), parent=root)

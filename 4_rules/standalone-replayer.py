@@ -36,7 +36,7 @@ def conformance_dmn(path_results, log, verbose=True):
     condition.to_excel('report.xls')
     return pd.DataFrame(condition.all(axis=1), columns=['conformance_dmn'])
 
-path_dataset = '/Users/gbernar1/Desktop/pdc_3/PDC_repo/results/log10/1_incomplete/output/dataset/dataset.csv'
+path_dataset = 'data/csv/log1-training.csv'
 path_rules = '/Users/gbernar1/Desktop/pdc_3/PDC_repo/results/log10/4_dmn/trees/rules.txt'
 log = Log()
 log.read_csv(path_dataset)
