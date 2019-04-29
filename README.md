@@ -3,12 +3,15 @@
 ## Introduction
 This is our contribution for the [Process Discovery Challenge](https://icpmconference.org/process-discovery-contest). More information about our approach are available [here](TODO).
 
+## Prerequisites
+You should run the code using Python 3.6.2 with Pandas, Sklearn, and Numpy installed. Some steps require the use of the open source software [ProM](http://www.promtools.org/doku.php).
+
 ## How to use
-Our algorithm is composed of 4 steps that you should apply sequentially.
-1. Remove incomplete trace
-2. Disambiguate activity (recurrent activities)
-3. Cut the traces before applying the Inductive Miner
-4. Mine DMN rules
+Our algorithm is composed of 4 sequential steps.
+1. [Remove incomplete trace](#step-1-remove-the-trace-that-are-considered-incomplete)
+1. [Disambiguate activity (recurrent activities)](#step-2-rename-the-activities-that-are-ambiguous)
+1. [Cut the traces before applying the Inductive Miner](#step-3-find-cuts-in-the-traces-before-feeding-it-to-the-inductive-miner)
+1. [Mine DMN rules](#step-4-mine-rules)
 
 ### Step 1: remove the trace that are considered incomplete
 We know for a fact that 20% of the traces are incomplete. We remove them using the script: *[1_incomplete/incomplete.py](1_incomplete/incomplete.py)*. 
