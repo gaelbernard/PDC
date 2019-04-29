@@ -75,7 +75,7 @@ class Feature:
         d = np.array([position for seq_aligned in log.seq for position, e in enumerate(seq_aligned) if e!='-']).reshape(-1, 1)
         d = pairwise_distances(d, metric='manhattan')
         self.feature['distance_position'] = d
-        print ('distance_position', pd.DataFrame(self.feature['distance_position'], index=log.vector_activities, columns=log.vector_activities).astype(int))
+        #print ('distance_position', pd.DataFrame(self.feature['distance_position'], index=log.vector_activities, columns=log.vector_activities).astype(int))
 
 
     def distance_in_count_activity_before(self, log):
@@ -84,7 +84,7 @@ class Feature:
             d.append(log.lefts[i].count(log.vector_activities[i]))
 
         self.feature['distance_in_count_activity_before'] =  pairwise_distances(np.array(d).reshape(-1, 1), metric='manhattan')
-        print ('distance_in_count_activity_before', pd.DataFrame(self.feature['distance_in_count_activity_before'], index=log.vector_activities, columns=log.vector_activities).astype(int))
+        #print ('distance_in_count_activity_before', pd.DataFrame(self.feature['distance_in_count_activity_before'], index=log.vector_activities, columns=log.vector_activities).astype(int))
 
     def distance_next_neigh(self, log, onlyLeft=False):
         data = defaultdict(list)
@@ -100,7 +100,10 @@ class Feature:
             data = cv.fit_transform(txt)
             f.append(pd.DataFrame(data.toarray(), columns=cv.get_feature_names()))
 
+        print ()
         f = pd.concat(f, axis=1)
+        print ('distance_next_neigh')
+        #print (f.loc[:,['a','b','c']])
 
         self.feature['distance_next_neigh'] =  f
 
@@ -121,7 +124,11 @@ class Feature:
                 else:
                     v = 0
                 results[i][l] = v
+        print ()
+        print ('distance_in_activity_seen_before')
+        print (pd.DataFrame(results).T)
         self.feature['distance_in_activity_seen_before'] = pairwise_distances(pd.DataFrame(results).T, metric='hamming')
+        print (self.feature['distance_in_activity_seen_before'])
 
 
     def build_distanceMatrix(self, log):
@@ -149,6 +156,7 @@ class Feature:
         dists = pd.DataFrame((dists_b_a+dists_count_before+dists_position+dists_neigh)/4)
 
         self.distanceMatrix = dists
+        #print (dists)
 
     def dm_aggregated(self, vector_aggregation, n_components=None):
         d = self.distanceMatrix.groupby(vector_aggregation).mean()
@@ -157,10 +165,10 @@ class Feature:
         return d
 
 # Load Logs
-log = Log()
-log.read_list([['a', 'b', 'c'], ['a', 'a']])
+#log = Log()
+#log.read_list([['a', 'b', 'c'], ['a', 'a']])
 
 # Load
-f = Feature()
-f.build_distanceMatrix(log)
-feature = f.distanceMatrix
+#f = Feature()
+#f.build_distanceMatrix(log)
+#feature = f.distanceMatrix

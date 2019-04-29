@@ -1,0 +1,7 @@
+(dmn['z_4'] <= 0.047) & (dmn['z_6'] <= 0.5) == happens['ab']
+(dmn['z_6'] <= 0.5) & (dmn['z_1'] <= 0.889) == happens['an']
+(dmn['z_6'] <= 0.5) != happens['e']
+(dmn['z_6'] > 0.5) != happens['j']
+(dmn['z_6'] > 0.5) & (dmn['z_1'] > 0.01) != happens['j']
+(dmn['z_7'] <= 0.106) & (dmn['z_6'] <= 0.5) == happens['n']
+(dmn['z_6'] <= 0.5) != happens['z']

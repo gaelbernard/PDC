@@ -1,35 +1,13 @@
 from Object.Log import Log
-from constant import *
 import numpy as np
-from sklearn.metrics import silhouette_score
-from sklearn.cluster import AgglomerativeClustering
-import pandas as pd
+from sklearn.cluster import AgglomerativeClustering, DBSCAN, AffinityPropagation, MeanShift
 from anytree.exporter import JsonExporter
 from Object.Feature import Feature
 from anytree import LevelOrderIter, Node, RenderTree
-import matplotlib.pyplot as plt
 
 def get_cluster(feature, k):
-    label = AgglomerativeClustering(n_clusters=k).fit_predict(feature)
+    label = AgglomerativeClustering(n_clusters=k, affinity="euclidean", linkage="average").fit_predict(feature)
     return {id:feature.iloc[np.where(label==id)[0],:].index.values.tolist() for id in np.unique(label)}
-
-def show_silhouette(feature):
-    test_range = range(2,25)
-    print ('####:')
-    print ('silhouette:')
-    o = {}
-    for k in test_range:
-        label = AgglomerativeClustering(n_clusters=k).fit_predict(feature)
-        o[k] = silhouette_score(feature, label)
-        print (k, o[k])
-    o = pd.Series(o)
-    o.to_csv('1_split/silhouette_score.csv', header=True)
-    o.plot.line()
-    plt.xticks(test_range)
-    plt.grid()
-    plt.savefig('silhouette_score.png')
-    plt.close()
-
 
 def filter_seq(seq, to_keep):
     s_n = []
@@ -55,25 +33,16 @@ def get_abstract_log(seq, cluster):
 
 # Load logs
 log = Log()
-log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/2_disambiguate_activities/output/dataset.csv')
-
-c = {}
-for e in log.alphabet:
-    c[e] = {}
-    for i, s in enumerate(log.seq):
-        c[e][i] = s.count(e)
-c = pd.DataFrame(c)
+log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/results/log4_result/1_incomplete/output/dataset/dataset.csv')
 
 # Load feature
 f = Feature()
 f.build_distanceMatrix(log)
 feature = f.dm_aggregated(log.vector_activities, n_components=100)
 
-show_silhouette(feature)
-
 # Build the tree
 root = Node('root', discoveryAlgorithm="", nonReplayable="", log=log.seq)
-cluster = get_cluster(feature, 6) #5
+cluster = get_cluster(feature, 6)
 l = get_abstract_log(root.log, cluster)
 for i, c in cluster.items():
     Node(str(i), discoveryAlgorithm="", nonReplayable="", log=filter_seq(root.log, c), parent=root)

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ptml>
+<processTree id="a6204f19-5fda-4063-96f1-5da9974b5358" name="a6204f19-5fda-4063-96f1-5da9974b5358" root="67b4214b-881d-488f-a790-7494748df0fd">
+<manualTask id="1ebccba0-51c2-4406-aa33-0985d2d7ec38" name="ao"/>
+<manualTask id="64f9a6af-a898-4ae4-b4b5-5bb5c0df81d6" name="ad"/>
+<sequence id="67b4214b-881d-488f-a790-7494748df0fd" name=""/>
+<parentsNode id="af77f6e9-a47a-4099-b1d8-7efc12fb3fef" sourceId="67b4214b-881d-488f-a790-7494748df0fd" targetId="1ebccba0-51c2-4406-aa33-0985d2d7ec38"/>
+<parentsNode id="26f61715-325f-4d47-b86c-f1cc1adb7b34" sourceId="67b4214b-881d-488f-a790-7494748df0fd" targetId="64f9a6af-a898-4ae4-b4b5-5bb5c0df81d6"/>
+</processTree>
+</ptml>

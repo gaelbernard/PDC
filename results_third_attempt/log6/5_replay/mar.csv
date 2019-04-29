@@ -1,0 +1,66 @@
+Result of replaying d971d73a-c10d-4dce-b52f-f7cdf231ef70 on Anonymous log imported from mar-log6-training.xes
+
+Index,Case IDs,NumOfCases,IsReliable,"Traversed Arcs","Raw Fitness Cost","Calculation Time (ms)","Max Move-Log Cost","Num. States","Move-Model Fitness","Trace Fitness","Max Fitness Cost","Move-Log Fitness","Trace Length","Queued States",Match
+1,"4|7|9|21|24|35",6,Yes,"22.00","0.00","2.00","4.00","6.00","1.00","1.00","7.00","1.00","4.00","21.00",[L/M]a|[L/M]e|[L/M]c|[L/M]ah|[M-INVI]tau from tree
+2,"5|12|13|25|29",5,Yes,"33.00","0.00","4.00","8.00","9.00","1.00","1.00","11.00","1.00","8.00","32.00",[L/M]a|[L/M]e|[L/M]c|[L/M]m|[L/M]y|[L/M]n|[L/M]ac|[L/M]ai
+3,"3|17|27",3,Yes,"22.00","0.00","2.00","4.00","6.00","1.00","1.00","7.00","1.00","4.00","21.00",[L/M]a|[L/M]e|[L/M]c|[L/M]b|[M-INVI]tau from tree
+4,"31|33",2,Yes,"33.00","0.00","0.00","8.00","9.00","1.00","1.00","11.00","1.00","8.00","32.00",[L/M]a|[L/M]e|[L/M]c|[L/M]m|[L/M]y|[L/M]n|[L/M]i|[L/M]ak
+5,"39",1,Yes,"348.00","20.00","27.00","34.00","231.00","0.94","0.46","37.00","0.44","34.00","325.00",[L/M]a|[L/M]e|[L/M]c|[M-INVI]tau from tree|[L/M]o|[M-INVI]tau split|[L]k|[L]aj|[L]z|[L/M]ae|[L/M]u|[L]j|[L]g|[L]g|[L]aa|[L]ab|[L]p|[L]t|[L]an|[L]a|[L]c|[L]c|[L]o|[L/M]k|[M-INVI]tau join|[L/M]aj|[L/M]z|[M-INVI]tau split|[L]ae|[L]u|[L/M]j|[L/M]g|[M-INVI]tau join|[M-INVI]tau split|[L]aa|[L/M]aa|[L/M]ab|[L/M]p|[M-REAL]t|[L/M]an|[M-INVI]tau join|[L]t
+6,"20",1,Yes,"159.00","8.00","14.00","16.00","57.00","0.75","0.58","19.00","0.75","16.00","130.00",[L/M]a|[L/M]e|[L/M]c|[M-INVI]tau from tree|[L/M]f|[M-INVI]tau split|[L/M]k|[L/M]ae|[L]aj|[L/M]u|[M-INVI]tau join|[M-REAL]af|[M-REAL]s|[M-INVI]tau split|[L/M]w|[L]al|[L]x|[L/M]g|[M-INVI]tau join|[M-INVI]tau split|[M-REAL]aa|[M-REAL]p|[L/M]t|[L/M]ab|[L]an|[L/M]an|[M-INVI]tau join
+7,"11",1,Yes,"89.00","2.00","10.00","16.00","26.00","0.94","0.89","19.00","0.94","16.00","83.00",[L/M]a|[L/M]e|[L/M]c|[M-INVI]tau from tree|[L/M]h|[L/M]ag|[L/M]aq|[L/M]af|[L/M]s|[M-INVI]tau split|[L/M]g|[L]ab|[L/M]j|[M-INVI]tau join|[M-INVI]tau split|[M-REAL]ab|[L/M]aa|[M-INVI]tau from tree|[M-INVI]tau split|[L/M]am|[L/M]ao|[M-INVI]tau join|[L/M]t|[L/M]an|[M-INVI]tau join
+8,"30",1,Yes,"90.00","4.00","12.00","16.00","29.00","0.88","0.79","19.00","0.88","16.00","85.00",[M-REAL]a|[L]e|[L/M]e|[L/M]c|[M-INVI]tau from tree|[L/M]o|[M-INVI]tau split|[L/M]k|[L/M]u|[L/M]ae|[M-INVI]tau join|[L/M]aj|[L/M]z|[M-INVI]tau split|[L/M]g|[M-REAL]j|[M-INVI]tau join|[M-INVI]tau split|[L/M]ab|[L/M]aa|[L]j|[L/M]p|[L/M]t|[L/M]an|[M-INVI]tau join
+9,"8",1,Yes,"81.00","4.00","9.00","16.00","26.00","0.93","0.79","19.00","0.81","16.00","78.00",[L/M]a|[L/M]e|[L/M]c|[M-INVI]tau from tree|[L/M]f|[M-INVI]tau split|[L/M]u|[L/M]ae|[L/M]k|[M-INVI]tau join|[L/M]aj|[L/M]z|[M-INVI]tau split|[L/M]g|[L]ab|[L/M]w|[M-INVI]tau join|[M-INVI]tau split|[M-REAL]ab|[L/M]v|[L]w|[L]ad|[L/M]ad|[M-INVI]tau join
+10,"14",1,Yes,"170.00","6.00","17.00","14.00","63.00","0.79","0.65","17.00","0.79","14.00","139.00",[L/M]a|[L/M]e|[L]o|[L/M]c|[M-INVI]tau from tree|[M-REAL]f|[M-INVI]tau split|[L]aj|[L/M]k|[L/M]ae|[L/M]u|[M-INVI]tau join|[M-REAL]aj|[L/M]z|[M-INVI]tau split|[L/M]w|[M-REAL]g|[M-INVI]tau join|[M-INVI]tau split|[L/M]v|[L/M]ad|[L]g|[L/M]ab|[M-INVI]tau join
+11,"38",1,Yes,"83.00","6.00","7.00","14.00","28.00","0.79","0.65","17.00","0.79","14.00","78.00",[L/M]a|[L]e|[L/M]e|[L/M]c|[M-INVI]tau from tree|[M-REAL]f|[M-INVI]tau split|[L/M]k|[L/M]u|[L/M]ae|[M-INVI]tau join|[L]z|[L/M]aj|[M-REAL]z|[M-INVI]tau split|[L]j|[L/M]j|[L/M]g|[M-INVI]tau join|[M-INVI]tau split|[M-REAL]aa|[L/M]l|[L/M]ab|[M-INVI]tau join
+12,"15",1,Yes,"77.00","2.00","8.00","14.00","23.00","0.93","0.88","17.00","0.93","14.00","74.00",[L/M]a|[L/M]e|[L/M]c|[M-INVI]tau from tree|[L/M]o|[M-INVI]tau split|[L/M]u|[L/M]k|[L]aj|[L/M]ae|[M-INVI]tau join|[M-REAL]aj|[L/M]z|[M-INVI]tau split|[L/M]j|[L/M]g|[M-INVI]tau join|[M-INVI]tau split|[L/M]aa|[L/M]l|[L/M]ab|[M-INVI]tau join
+13,"23",1,Yes,"76.00","7.00","7.00","14.00","28.00","0.77","0.59","17.00","0.71","14.00","73.00",[L/M]a|[L/M]e|[L/M]c|[M-INVI]tau from tree|[L/M]h|[L/M]ag|[L]af|[L/M]aq|[M-REAL]af|[L/M]s|[M-INVI]tau split|[L]g|[L]g|[L/M]g|[M-REAL]j|[M-INVI]tau join|[M-INVI]tau split|[L]v|[L/M]v|[M-REAL]ad|[L/M]ab|[M-INVI]tau join
+14,"16",1,Yes,"74.00","0.00","4.00","14.00","22.00","1.00","1.00","17.00","1.00","14.00","72.00",[L/M]a|[L/M]e|[L/M]c|[M-INVI]tau from tree|[L/M]o|[M-INVI]tau split|[L/M]u|[L/M]ae|[L/M]k|[M-INVI]tau join|[L/M]aj|[L/M]z|[M-INVI]tau split|[L/M]w|[L/M]g|[M-INVI]tau join|[M-INVI]tau split|[L/M]v|[L/M]ab|[L/M]ad|[M-INVI]tau join
+15,"22",1,Yes,"74.00","3.00","6.00","11.00","22.00","0.79","0.79","14.00","1.00","11.00","71.00",[L/M]a|[L/M]e|[L/M]c|[M-INVI]tau from tree|[L/M]o|[M-INVI]tau split|[M-REAL]ae|[M-REAL]u|[L/M]k|[M-INVI]tau join|[L/M]aj|[L/M]z|[M-INVI]tau split|[L/M]w|[L/M]g|[M-INVI]tau join|[M-INVI]tau split|[M-REAL]v|[L/M]ab|[L/M]ad|[M-INVI]tau join
+16,"40",1,Yes,"75.00","1.00","5.00","13.00","22.00","0.93","0.94","16.00","1.00","13.00","72.00",[L/M]a|[L/M]e|[L/M]c|[M-INVI]tau from tree|[L/M]f|[M-INVI]tau split|[L/M]u|[L/M]k|[L/M]ae|[M-INVI]tau join|[L/M]aj|[L/M]z|[M-INVI]tau split|[M-REAL]g|[L/M]w|[M-INVI]tau join|[M-INVI]tau split|[L/M]v|[L/M]ab|[L/M]ad|[M-INVI]tau join
+17,"1",1,Yes,"37.00","3.00","4.00","9.00","13.00","0.88","0.75","12.00","0.78","9.00","34.00",[L]a|[L/M]a|[L/M]e|[L/M]c|[L/M]m|[L/M]y|[L]i|[L/M]n|[M-REAL]i|[L/M]ak
+18,"10",1,Yes,"29.00","5.00","0.00","9.00","11.00","1.00","0.58","12.00","0.44","9.00","28.00",[L]e|[L]a|[L]c|[L]ah|[L/M]a|[L]e|[L/M]e|[L/M]c|[L/M]ah|[M-INVI]tau from tree
+19,"34",1,Yes,"28.00","5.00","0.00","9.00","11.00","1.00","0.58","12.00","0.44","9.00","27.00",[L]a|[L]e|[L]c|[L]b|[L]b|[L/M]a|[L/M]e|[L/M]c|[L/M]b|[M-INVI]tau from tree
+20,"6",1,Yes,"27.00","4.00","1.00","8.00","10.00","1.00","0.64","11.00","0.50","8.00","26.00",[L]a|[L]e|[L]c|[L]ah|[L/M]a|[L/M]e|[L/M]c|[L/M]ah|[M-INVI]tau from tree
+21,"26",1,Yes,"35.00","2.00","3.00","8.00","11.00","0.88","0.82","11.00","0.88","8.00","34.00",[L/M]a|[L/M]e|[L/M]c|[M-REAL]m|[L]y|[L/M]y|[L/M]n|[L/M]i|[L/M]ak
+22,"28",1,Yes,"32.00","2.00","0.00","8.00","11.00","0.88","0.82","11.00","0.88","8.00","31.00",[L/M]a|[L/M]e|[L/M]c|[L/M]m|[L/M]y|[L/M]n|[L]ai|[L/M]ac|[M-REAL]ai
+23,"18",1,Yes,"29.00","3.00","2.00","7.00","12.00","1.00","0.70","10.00","0.57","7.00","28.00",[L/M]a|[L/M]e|[L/M]c|[L]ah|[L]e|[L]a|[L/M]ah|[M-INVI]tau from tree
+24,"32",1,Yes,"32.00","1.00","1.00","7.00","9.00","0.88","0.90","10.00","1.00","7.00","31.00",[L/M]a|[L/M]e|[M-REAL]c|[L/M]m|[L/M]y|[L/M]n|[L/M]i|[L/M]ak
+25,"37",1,Yes,"29.00","1.00","3.00","7.00","9.00","1.00","0.90","10.00","0.86","7.00","28.00",[L/M]a|[L/M]e|[L/M]c|[L/M]m|[L/M]y|[L]i|[L/M]n|[M-INVI]tau from tree
+26,"19",1,Yes,"30.00","0.00","2.00","7.00","8.00","1.00","1.00","10.00","1.00","7.00","29.00",[L/M]a|[L/M]e|[L/M]c|[L/M]d|[L/M]q|[L/M]ac|[L/M]ai
+27,"2",1,Yes,"20.00","2.00","0.00","3.00","7.00","0.67","0.67","6.00","0.67","3.00","19.00",[L]e|[L/M]a|[M-REAL]e|[L/M]c|[M-INVI]tau from tree|[M-INVI]tau from tree
+28,"36",1,Yes,"24.00","1.00","0.00","5.00","7.00","1.00","0.88","8.00","0.80","5.00","23.00",[L]a|[L/M]a|[L/M]e|[L/M]c|[L/M]ah|[M-INVI]tau from tree
+
+
+ONLY RELIABLE RESULTS
+
+Property,Value
+#Reliable cases replayed,40
+#Synchronous ev.class (log+model),307
+#Skipped ev.class,28
+#Unobservable ev.class,100
+#Inserted ev.class,64
+Traversed Arcs,54.425000000000004
+Calculation Time (ms),4.500000000000001
+Raw Fitness Cost,2.3
+Max Move-Log Cost,9.275
+Num. States,20.325000000000003
+Trace Fitness,0.8557767953133666
+Move-Model Fitness,0.9394688644688645
+Move-Log Fitness,0.8710591736694678
+Max Fitness Cost,12.274999999999999
+Trace Length,9.275
+Queued States,50.775
+
+
+Property,Average,Minimum,Maximum,Std. Deviation,Number of cases with value 1.00
+"Traversed Arcs","54.42","20.00","348.00","59.29","0.00"
+"Raw Fitness Cost","2.30","0.00","20.00","3.66","4.00"
+"Calculation Time (ms)","4.50","0.00","27.00","5.38","2.00"
+"Max Move-Log Cost","9.27","3.00","34.00","5.70","0.00"
+"Num. States","20.32","6.00","231.00","36.48","0.00"
+"Move-Model Fitness","0.94","0.67","1.00","0.09","24.00"
+"Trace Fitness","0.86","0.46","1.00","0.17","18.00"
+"Max Fitness Cost","12.27","6.00","37.00","5.70","0.00"
+"Move-Log Fitness","0.87","0.44","1.00","0.18","21.00"
+"Trace Length","9.27","3.00","34.00","5.70","0.00"
+"Queued States","50.78","19.00","325.00","53.61","0.00"

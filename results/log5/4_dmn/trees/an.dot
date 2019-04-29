@@ -1,0 +1,28 @@
+digraph Tree {
+node [shape=box] ;
+0 [label="z_3 <= 0.995\ngini = 0.075\nsamples = 560\nvalue = [538, 22]"] ;
+1 [label="z_1 <= 0.295\ngini = 0.072\nsamples = 559\nvalue = [538, 21]"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+3 [label="gini = 0.0\nsamples = 174\nvalue = [174, 0]"] ;
+1 -> 3 ;
+4 [label="z_1 <= 0.296\ngini = 0.103\nsamples = 385\nvalue = [364, 21]"] ;
+1 -> 4 ;
+5 [label="gini = 0.0\nsamples = 1\nvalue = [0, 1]"] ;
+4 -> 5 ;
+6 [label="z_1 <= 0.419\ngini = 0.099\nsamples = 384\nvalue = [364, 20]"] ;
+4 -> 6 ;
+7 [label="z_1 <= 0.412\ngini = 0.206\nsamples = 60\nvalue = [53, 7]"] ;
+6 -> 7 ;
+9 [label="gini = 0.16\nsamples = 57\nvalue = [52, 5]"] ;
+7 -> 9 ;
+10 [label="z_3 <= 0.693\ngini = 0.444\nsamples = 3\nvalue = [1, 2]"] ;
+7 -> 10 ;
+11 [label="gini = 0.0\nsamples = 1\nvalue = [1, 0]"] ;
+10 -> 11 ;
+12 [label="gini = 0.0\nsamples = 2\nvalue = [0, 2]"] ;
+10 -> 12 ;
+8 [label="gini = 0.077\nsamples = 324\nvalue = [311, 13]"] ;
+6 -> 8 ;
+2 [label="gini = 0.0\nsamples = 1\nvalue = [0, 1]"] ;
+0 -> 2 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+}
