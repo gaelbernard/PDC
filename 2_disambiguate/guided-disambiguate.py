@@ -9,7 +9,7 @@ app = Flask(__name__)
 from flask_cors import CORS
 import urllib.parse
 import json
-
+import constant
 def get_worst(feature, vector, rejected):
     '''
     The worst activity is the one having the biggest distance
@@ -72,7 +72,7 @@ def goToNext():
 
 # Load Logs
 log = Log()
-log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/1_incomplete/output/dataset/dataset.csv')
+log.read_csv('{}/1_incomplete/output/dataset/dataset.csv').format(constant.CURRENT_folder)
 
 # Load features
 f = Feature()

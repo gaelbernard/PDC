@@ -20,7 +20,7 @@ logs = {}
 vector_names = []
 for name, path in files.items():
     logs[name] = Log()
-    logs[name].read_csv('{}/data/csv/{}'.format(constant.CURRENT_folder,path))
+    logs[name].read_csv('{}/0_data/csv/{}'.format(constant.CURRENT_folder,path))
     vector_names.extend([name]*len(logs[name].seq))
 vector_names = pd.Series(vector_names)
 big_log = Log()
@@ -74,7 +74,7 @@ for type in files.keys():
         sub_proba = sub_proba.nlargest(len(logs['overall'].seq)-how_many_to_cut)
 
         # EXPORT cut CSV
-        d = pd.read_csv('{}/data/csv/{}'.format(constant.CURRENT_folder,files['overall']))
+        d = pd.read_csv('{}/0_data/csv/{}'.format(constant.CURRENT_folder,files['overall']))
         d = d[d['case'].isin(sub_proba.index)]
         d.to_csv('output/dataset/dataset.csv', index=False)
 

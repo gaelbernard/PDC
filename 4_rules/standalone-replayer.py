@@ -1,5 +1,6 @@
 import pandas as pd
 from Object.Log import Log
+import constant
 
 def conformance_dmn(path_results, log, verbose=True):
     global dmn, happens
@@ -36,8 +37,8 @@ def conformance_dmn(path_results, log, verbose=True):
     condition.to_excel('report.xls')
     return pd.DataFrame(condition.all(axis=1), columns=['conformance_dmn'])
 
-path_dataset = 'data/csv/log1-training.csv'
-path_rules = '/Users/gbernar1/Desktop/pdc_3/PDC_repo/results/log10/4_dmn/trees/rules.txt'
+path_dataset = '{}/0_data/csv/log10-training.csv'.format(constant.CURRENT_folder)
+path_rules = '{}/results/log10/4_dmn/trees/rules.txt'.format(constant.CURRENT_folder)
 log = Log()
 log.read_csv(path_dataset)
 conformance_dmn(path_rules, log)

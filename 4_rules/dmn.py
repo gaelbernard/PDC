@@ -4,9 +4,10 @@ from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score, accuracy_score, adjusted_mutual_info_score
 from sklearn.tree import export_graphviz
+import constant
 log = Log()
-log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/results/log10/1_incomplete/output/dataset/dataset.csv')
-max_leaf_nodes = 4
+log.read_csv('{}/results/log10/1_incomplete/output/dataset/dataset.csv'.format(constant.CURRENT_folder))
+max_leaf_nodes = 3
 '''
 The goal is discover the strong correlation between the execution of an activity AND a rule in the DMN table
 '''

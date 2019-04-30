@@ -4,6 +4,7 @@ from sklearn.cluster import AgglomerativeClustering, DBSCAN, AffinityPropagation
 from anytree.exporter import JsonExporter
 from Object.Feature import Feature
 from anytree import LevelOrderIter, Node, RenderTree
+import constant
 
 def get_cluster(feature, k):
     label = AgglomerativeClustering(n_clusters=k, affinity="euclidean", linkage="average").fit_predict(feature)
@@ -33,8 +34,8 @@ def get_abstract_log(seq, cluster):
 
 # Load logs
 log = Log()
-log.read_csv('/Users/gbernar1/Desktop/pdc_3/PDC_repo/results/log10/2_disambiguate_activities/output/dataset.csv')
-number_of_cluster = 5
+log.read_csv('{}/results/log8/1_incomplete/output/dataset/dataset.csv').format(constant.CURRENT_folder)
+number_of_cluster = 3
 
 # Load feature
 f = Feature()

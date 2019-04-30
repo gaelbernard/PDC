@@ -72,7 +72,7 @@ To check whether traces are fitting or not, we run several tests. The script [5_
 # Three tests will be run on feb-log10-training.csv
 {
 'feb-log10-training': {
-        'path_log': '{}/data/csv/tests/feb-log10-training.csv'.format(root),
+        'path_log': '{}/0_data/csv/tests/feb-log10-training.csv'.format(root),
         'tests': {
             'conformance_imperative': '{}/results/log10/replay/feb.csv'.format(root),
             'conformance_dmn': '{}/results/log10/4_dmn/trees/rules.txt'.format(root),
